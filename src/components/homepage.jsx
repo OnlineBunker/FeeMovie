@@ -1,8 +1,8 @@
-import 'homepage.css';
+import './homepage.css';
 
 function Homepage() {
     return (
-        <div>
+        <div className='name'>
             
         </div>
     )

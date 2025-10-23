@@ -1,0 +1,109 @@
+.search-page {
+  padding: 20px;
+  min-height: calc(100vh - 100px);
+  color: #e1d7d7;
+  background-color: black;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.search-form {
+  display: flex;
+  margin-bottom: 30px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.search-form input {
+  flex: 1;
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 5px 0 0 5px;
+  border: 1px solid #f12828;
+  background-color: #323643;
+  color: #e1d7d7;
+}
+
+.search-form button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 0 5px 5px 0;
+  border: 1px solid #f12828;
+  cursor: pointer;
+  background-color: #f12828;
+  color: #fff;
+  transition: 0.3s;
+}
+
+.search-form button:hover {
+  background-color: #ee3030;
+}
+
+/* Movie grid */
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  padding-bottom: 50px;
+}
+
+/* Movie card with fixed height */
+.movie-card {
+  background-color: rgba(50, 54, 67, 0.9);
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  color: #e1d7d7;
+  display: flex;
+  flex-direction: column;
+  height: 480px; /* fixed height for all cards */
+  justify-content: flex-start;
+  transition: transform 0.3s, background-color 0.3s;
+}
+
+.movie-card:hover {
+  transform: scale(1.03);
+  background-color: rgba(50, 54, 67, 1);
+}
+
+.movie-card img {
+  width: 100%;
+  border-radius: 10px;
+  height: 250px;
+  object-fit: cover;
+}
+
+.movie-card .no-image {
+  width: 100%;
+  height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #606470;
+  border-radius: 10px;
+  color: #e1d7d7;
+}
+
+.movie-card h3 {
+  margin: 10px 0 5px 0;
+  color: #f12828;
+  font-size: 1.1rem;
+}
+
+.movie-card p {
+  font-size: 0.85rem;
+  line-height: 1.1rem;
+  margin: 3px 0;
+}
+
+.movie-card .overview {
+  margin-top: auto; 
+}
+
+.loading,
+.no-results {
+  text-align: center;
+  color: #f12828;
+  font-size: 1.2rem;
+  margin: 20px 0;
+}
