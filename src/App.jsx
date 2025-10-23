@@ -6,7 +6,7 @@ import Navbar from './components/navbar.jsx';
 import Homepage from './components/homepage.jsx';
 import Footer from './components/footer.jsx';
 import SearchPage from './search/search.jsx';
-import MoviePage from './search/MoviePage.jsx'; // <-- import new page
+import MoviePage from './search/moviepage.jsx';
 
 function App() {
   useEffect(() => {
@@ -33,7 +33,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Homepage />} />
             <Route path="/search" element={<SearchPage />} />
-            <Route path="/movie/:id" element={<MoviePage />} /> {/* <-- new route */}
+            <Route path="/movie/:id" element={<MoviePage />} />
           </Routes>
         </div>
         <Footer />

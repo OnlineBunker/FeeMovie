@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom"; // ✅ for navigation
+import { useNavigate } from "react-router-dom";
 import "./homepage.css";
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
 function HorizontalRow({ title, movies, rowRef }) {
-  const navigate = useNavigate(); // initialize navigate
+  const navigate = useNavigate(); 
 
   const scrollBy = (distance = 400) => {
     if (!rowRef?.current) return;
@@ -24,7 +24,7 @@ function HorizontalRow({ title, movies, rowRef }) {
             <div
               className="movie-card-row"
               key={movie.id}
-              onClick={() => navigate(`/movie/${movie.id}`)} // navigate on click
+              onClick={() => navigate(`/movie/${movie.id}`)} 
               style={{ cursor: "pointer" }}
             >
               {movie.poster_path ? (
@@ -60,7 +60,6 @@ function HorizontalRow({ title, movies, rowRef }) {
   );
 }
 
-// helper function (can be reused)
 const truncateDescription = (text, wordLimit = 15) => {
   if (!text) return "";
   const words = text.split(" ");
