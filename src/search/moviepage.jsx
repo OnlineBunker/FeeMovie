@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import "./MoviePage.css";
+import "./moviepage.css";
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
