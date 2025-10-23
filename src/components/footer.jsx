@@ -3,7 +3,7 @@ import './footer.css';
 function Footer() {
   return (
     <footer className="footer">
-      <div className="footer-logo">MyLogo</div>
+      <div className="footer-logo">FeeMovie</div>
       <ul className="footer-links">
         <li><a href="https://www.instagram.com/yash_d_dhankhar" target="_blank" rel="noopener noreferrer">Instagram</a></li>
         <li><a href="https://github.com/OnlineBunker" target="_blank" rel="noopener noreferrer">GitHub</a></li>

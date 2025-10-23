@@ -4,7 +4,7 @@ import './navbar.css';
 function Navbar() {
   return (
     <nav className="navbar">
-      <div className="logo">MyLogo</div>
+      <div className="logo">FeeMovie</div>
       <ul className="nav-links">
         <li><Link to="/">Home</Link></li>
         <li><a target="_blank" href="https://www.vidking.net/">API</a></li>
