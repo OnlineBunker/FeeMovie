@@ -1,4 +1,4 @@
-# 🎬 MovieVerse – Your Ultimate Movie Explorer
+# 🎬 FeeMovie – Your Ultimate Movie Explorer
 
 MovieVerse is a modern, responsive React web app that lets users explore trending, top-rated, and newly released movies in style. It connects to **The Movie Database (TMDB) API** for live movie data and integrates a third-party video player to stream films directly from external sources.
 
