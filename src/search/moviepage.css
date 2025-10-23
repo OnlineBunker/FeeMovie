@@ -1,0 +1,40 @@
+.movie-page {
+  padding: 50px;
+  color: #e1d7d7;
+  background-color: black;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  min-height: calc(100vh - 100px);
+}
+
+.movie-page h1 {
+  color: #f12828;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.video-container {
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.movie-details {
+  background-color: rgba(50, 54, 67, 0.9);
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.movie-details p {
+  margin: 10px 0;
+  font-size: 1rem;
+  line-height: 1.3rem;
+}
+
+.loading {
+  text-align: center;
+  color: #f12828;
+  font-size: 1.2rem;
+  margin: 20px 0;
+}

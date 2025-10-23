@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./search.css";
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
-
 const developersPick = [278, 389, 680, 807, 550, 510, 79464];
 
 function SearchPage() {
   const [query, setQuery] = useState("");
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!query) {
@@ -46,9 +47,7 @@ function SearchPage() {
     setLoading(true);
     try {
       const promises = developersPick.map((id) =>
-        fetch(
-          `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`
-        ).then((res) => res.json())
+        fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`).then((res) => res.json())
       );
       const results = await Promise.all(promises);
       const sorted = results.sort((a, b) => b.vote_average - a.vote_average);
@@ -89,7 +88,12 @@ function SearchPage() {
 
       <div className="movie-grid">
         {movies.map((movie) => (
-          <div className="movie-card" key={movie.id}>
+          <div
+            className="movie-card"
+            key={movie.id}
+            onClick={() => navigate(`/movie/${movie.id}`)}
+            style={{ cursor: "pointer" }}
+          >
             {movie.poster_path ? (
               <img
                 src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}

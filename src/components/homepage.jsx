@@ -1,9 +1,12 @@
 import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom"; // ✅ for navigation
 import "./homepage.css";
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
 function HorizontalRow({ title, movies, rowRef }) {
+  const navigate = useNavigate(); // initialize navigate
+
   const scrollBy = (distance = 400) => {
     if (!rowRef?.current) return;
     rowRef.current.scrollBy({ left: distance, behavior: "smooth" });
@@ -13,10 +16,17 @@ function HorizontalRow({ title, movies, rowRef }) {
     <section className="section-row">
       <h2 className="section-title">{title}</h2>
       <div className="row-wrapper">
-        <button className="row-arrow left" onClick={() => scrollBy(-400)}>‹</button>
+        <button className="row-arrow left" onClick={() => scrollBy(-400)}>
+          ‹
+        </button>
         <div className="cards-container" ref={rowRef}>
           {movies.map((movie) => (
-            <div className="movie-card-row" key={movie.id}>
+            <div
+              className="movie-card-row"
+              key={movie.id}
+              onClick={() => navigate(`/movie/${movie.id}`)} // navigate on click
+              style={{ cursor: "pointer" }}
+            >
               {movie.poster_path ? (
                 <img
                   className="card-poster"
@@ -29,23 +39,28 @@ function HorizontalRow({ title, movies, rowRef }) {
               <div className="card-body">
                 <h4 className="card-title">{movie.title}</h4>
                 <p className="card-meta">
-                  {movie.release_date ? movie.release_date.slice(0, 4) : "N/A"} ·{" "}
+                  {movie.release_date ? movie.release_date.slice(0, 4) : "N/A"}{" "}
+                  ·{" "}
                   {movie.vote_average !== undefined
                     ? movie.vote_average.toFixed(1)
                     : "N/A"}
                 </p>
-                <p className="card-overview">{truncateDescription(movie.overview)}</p>
+                <p className="card-overview">
+                  {truncateDescription(movie.overview)}
+                </p>
               </div>
             </div>
           ))}
         </div>
-        <button className="row-arrow right" onClick={() => scrollBy(400)}>›</button>
+        <button className="row-arrow right" onClick={() => scrollBy(400)}>
+          ›
+        </button>
       </div>
     </section>
   );
 }
 
-// helper (outside component) reused from your search page
+// helper function (can be reused)
 const truncateDescription = (text, wordLimit = 15) => {
   if (!text) return "";
   const words = text.split(" ");
@@ -61,16 +76,20 @@ export default function Homepage() {
   const [horror, setHorror] = useState([]);
   const [action, setAction] = useState([]);
   const [thriller, setThriller] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [newReleases, setNewReleases] = useState([]);
+  const [animated, setAnimated] = useState([]);
 
-  // row refs for scrolling
+  const newReleasesRef = useRef(null);
+  const animatedRef = useRef(null);
   const topRatedRef = useRef(null);
   const dramaRef = useRef(null);
   const horrorRef = useRef(null);
   const actionRef = useRef(null);
   const thrillerRef = useRef(null);
 
-  // fetch helpers
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  // fetch data
   useEffect(() => {
     const fetchTrending = async () => {
       try {
@@ -90,13 +109,12 @@ export default function Homepage() {
           `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}`
         );
         const data = await res.json();
-        setTopRated(data.results.slice(0, 12)); // fetch a few extra for scrolling
+        setTopRated(data.results.slice(0, 12));
       } catch (err) {
         console.error("Error fetching top rated:", err);
       }
     };
 
-    // Discover by genre — using sort by vote_average and a minimum vote_count to avoid obscure low-vote items
     const fetchByGenre = async (genreId, setter) => {
       try {
         const res = await fetch(
@@ -110,16 +128,30 @@ export default function Homepage() {
       }
     };
 
+    const fetchNewReleases = async () => {
+      try {
+        const res = await fetch(
+          `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&language=en-US&page=1`
+        );
+        const data = await res.json();
+        setNewReleases(data.results.slice(0, 10));
+      } catch (err) {
+        console.error("Error fetching new releases:", err);
+        setNewReleases([]);
+      }
+    };
+
     fetchTrending();
     fetchTopRated();
-    // TMDB genre ids: Drama 18, Horror 27, Action 28, Thriller 53
-    fetchByGenre(18, setDrama);
-    fetchByGenre(27, setHorror);
-    fetchByGenre(28, setAction);
-    fetchByGenre(53, setThriller);
+    fetchByGenre(18, setDrama); // Drama
+    fetchByGenre(27, setHorror); // Horror
+    fetchByGenre(28, setAction); // Action
+    fetchByGenre(53, setThriller); // Thriller
+    fetchByGenre(16, setAnimated); // Animated
+    fetchNewReleases();
   }, []);
 
-  // hero auto-rotation (trending)
+  // auto-rotate trending
   useEffect(() => {
     if (!trending.length) return;
     const interval = setInterval(() => {
@@ -129,15 +161,14 @@ export default function Homepage() {
   }, [trending]);
 
   const goNext = () => setCurrentIndex((p) => (p + 1) % trending.length);
-  const goPrev = () => setCurrentIndex((p) => (p - 1 + trending.length) % trending.length);
+  const goPrev = () =>
+    setCurrentIndex((p) => (p - 1 + trending.length) % trending.length);
 
-  if (!trending.length) return null; // you can replace with a loader
-
-  const currentMovie = trending[currentIndex];
+  if (!trending.length) return null;
 
   return (
     <div className="homepage-root">
-      {/* HERO / TRENDING CAROUSEL (keeps your existing structure) */}
+      {/* HERO / TRENDING CAROUSEL */}
       <div className="trending-carousel">
         <div className="trending-label">Top 10 Trending Movies of Today</div>
 
@@ -150,7 +181,9 @@ export default function Homepage() {
               }`}
               style={{
                 backgroundImage: `url(https://image.tmdb.org/t/p/original${movie.backdrop_path})`,
+                cursor: "pointer",
               }}
+              onClick={() => navigate(`/movie/${movie.id}`)} 
             >
               {index === currentIndex && (
                 <div className="movie-info">
@@ -162,19 +195,53 @@ export default function Homepage() {
           ))}
 
           <div className="carousel-arrows">
-            <button onClick={goPrev} className="arrow left">‹</button>
-            <button onClick={goNext} className="arrow right">›</button>
+            <button onClick={goPrev} className="arrow left">
+              ‹
+            </button>
+            <button onClick={goNext} className="arrow right">
+              ›
+            </button>
           </div>
         </div>
       </div>
 
       {/* HORIZONTAL ROWS */}
       <div className="rows-container">
-        <HorizontalRow title="Top Rated of All Time" movies={topRated} rowRef={topRatedRef} />
-        <HorizontalRow title="Top 10 Horror Picks" movies={horror} rowRef={horrorRef} />
-        <HorizontalRow title="Top 10 Action Picks" movies={action} rowRef={actionRef} />
-        <HorizontalRow title="Top 10 Psychological Thriller Picks" movies={thriller} rowRef={thrillerRef} />
-        <HorizontalRow title="Top 10 Drama Picks" movies={drama} rowRef={dramaRef} />
+        <HorizontalRow
+          title="Top Rated of All Time"
+          movies={topRated}
+          rowRef={topRatedRef}
+        />
+        <HorizontalRow
+          title="New Releases"
+          movies={newReleases}
+          rowRef={newReleasesRef}
+        />
+        <HorizontalRow
+          title="Top 10 Horror Picks"
+          movies={horror}
+          rowRef={horrorRef}
+        />
+        <HorizontalRow
+          title="Top Animated Movies"
+          movies={animated}
+          rowRef={animatedRef}
+        />
+        <HorizontalRow
+          title="Top 10 Action Picks"
+          movies={action}
+          rowRef={actionRef}
+        />
+        <HorizontalRow
+          title="Top 10 Psychological Thriller Picks"
+          movies={thriller}
+          rowRef={thrillerRef}
+        />
+        <HorizontalRow
+          title="Top 10 Drama Picks"
+          movies={drama}
+          rowRef={dramaRef}
+        />
       </div>
     </div>
   );

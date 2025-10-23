@@ -7,7 +7,7 @@ function Navbar() {
       <div className="logo">FeeMovie</div>
       <ul className="nav-links">
         <li><Link to="/">Home</Link></li>
-        <li><a target="_blank" href="https://www.vidking.net/">API</a></li>
+        <li><a target="_blank" href="https://vidsrcme.ru/api/">API</a></li>
         <li><Link to="/search">Search</Link></li>
       </ul>
     </nav>

@@ -6,23 +6,24 @@ import Navbar from './components/navbar.jsx';
 import Homepage from './components/homepage.jsx';
 import Footer from './components/footer.jsx';
 import SearchPage from './search/search.jsx';
+import MoviePage from './search/MoviePage.jsx'; // <-- import new page
 
 function App() {
   useEffect(() => {
-  const onScroll = () => {
-    const navbar = document.querySelector('.navbar');
-    if (!navbar) return;
+    const onScroll = () => {
+      const navbar = document.querySelector('.navbar');
+      if (!navbar) return;
 
-    if (window.scrollY > 20) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
-    }
-  };
+      if (window.scrollY > 20) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    };
 
-  window.addEventListener('scroll', onScroll);
-  return () => window.removeEventListener('scroll', onScroll);
-}, []);
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   return (
     <Router>
@@ -32,6 +33,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Homepage />} />
             <Route path="/search" element={<SearchPage />} />
+            <Route path="/movie/:id" element={<MoviePage />} /> {/* <-- new route */}
           </Routes>
         </div>
         <Footer />
