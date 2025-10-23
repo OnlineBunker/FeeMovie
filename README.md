@@ -65,7 +65,7 @@ VITE_TMDB_API_KEY=your_tmdb_api_key_here
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/OnlineBunker/movies.git
+   git clone https://github.com/OnlineBunker/FeeMovie.git
    ```
 
 2. Navigate into the project folder:
