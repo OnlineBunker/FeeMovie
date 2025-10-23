@@ -1,6 +1,6 @@
 # 🎬 FeeMovie – Your Ultimate Movie Explorer
 
-MovieVerse is a modern, responsive React web app that lets users explore trending, top-rated, and newly released movies in style. It connects to **The Movie Database (TMDB) API** for live movie data and integrates a third-party video player to stream films directly from external sources.
+FeeMovie is a modern, responsive React web app that lets users explore trending, top-rated, and newly released movies in style. It connects to **The Movie Database (TMDB) API** for live movie data and integrates a third-party video player to stream films directly from external sources.
 
 ---
 
@@ -124,7 +124,7 @@ Make sure to:
 ## 👨‍💻 Developer
 
 **Yash Dhankhar**
-🎓 CS & AI Student | 💡 Full Stack Learner | 🎮 Creator of MovieVerse
+🎓 CS & AI Student | 💡 Full Stack Learner
 📍 Delhi, India
 
 ---
@@ -133,6 +133,3 @@ Make sure to:
 
 This project is licensed under the **MIT License** — feel free to fork and improve!
 
----
-
-**Made with ❤️ using React + TMDB API**
